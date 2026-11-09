@@ -1,0 +1,129 @@
+<div class="register-page">
+
+  <div class="register-card">
+
+    <h2 class="title">🎟 Event Registration</h2>
+
+    <!-- Loading -->
+    <div *ngIf="isLoading" class="info">Loading event details...</div>
+
+    <!-- Error -->
+    <div *ngIf="errorMessage" class="error">
+      {{ errorMessage }}
+    </div>
+
+    <!-- Event Info -->
+    <div *ngIf="event" class="event-box">
+
+      <div class="event-name">
+        {{ event.event_name }}
+      </div>
+
+      <div class="event-meta">
+        <div>📍 {{ event.venue_name || event.venue_address || 'Location TBD' }}</div>
+        <div>🕒 {{ event.start_at | date:'fullDate' }}</div>
+      </div>
+
+    </div>
+
+    <!-- Success -->
+    <div *ngIf="successMessage" class="success">
+      {{ successMessage }}
+    </div>
+
+    <!-- REGISTRATION FORM -->
+    <form *ngIf="!qrPayload" (ngSubmit)="submit()" class="register-form">
+
+      <label>Full Name</label>
+      <input
+        [(ngModel)]="name"
+        name="name"
+        class="input"
+        placeholder="Enter your full name"
+        required
+      />
+
+      <label>Email Address</label>
+      <input
+        [(ngModel)]="email"
+        name="email"
+        type="email"
+        class="input"
+        placeholder="you@example.com"
+        required
+      />
+
+      <label>Mobile Number</label>
+      <input
+        [(ngModel)]="mobile"
+        name="mobile"
+        type="tel"
+        class="input"
+        placeholder="Enter mobile number"
+        required
+      />
+
+      <label>Ticket Type</label>
+      <select
+        [(ngModel)]="ticketType"
+        name="ticketType"
+        class="input"
+      >
+        <option>General Admission</option>
+        <option>VIP</option>
+        <option>Student</option>
+        <option>Early Bird</option>
+      </select>
+
+      <button class="btn-register" type="submit" [disabled]="isLoading">
+        {{ isLoading ? 'Registering...' : 'Register & Generate QR' }}
+      </button>
+
+    </form>
+
+    <!-- QR TICKET -->
+    <div *ngIf="qrPayload" class="ticket-container">
+
+      <div id="ticketCard" class="ticket-card">
+
+        <h3 class="ticket-title">Event Ticket</h3>
+
+        <p class="ticket-success">Registration Successful ✅</p>
+
+        <div class="ticket-details">
+
+          <p><b>Event:</b> {{ event?.event_name }}</p>
+          <p><b>Name:</b> {{ name }}</p>
+          <p><b>Email:</b> {{ email }}</p>
+          <p><b>Mobile:</b> {{ mobile }}</p>
+          <p><b>Ticket:</b> {{ ticketType }}</p>
+          <p><b>Date:</b> {{ event?.start_at | date:'fullDate' }}</p>
+
+        </div>
+
+        <div class="qr-area">
+          <qrcode
+            [qrdata]="qrPayload"
+            [width]="220">
+          </qrcode>
+        </div>
+
+        <p class="small">
+          Please show this QR code at the event check-in.
+        </p>
+
+      </div>
+
+      <button class="btn-download" (click)="downloadTicket()">
+        ⬇ Download Ticket
+      </button>
+
+      <button class="btn-secondary" (click)="resetForm()">
+        Register Another Person
+      </button>
+
+    </div>
+
+  </div>
+
+</div>

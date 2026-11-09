@@ -1,0 +1,119 @@
+/* Apply a global background color */
+:host {
+  display: block;
+  background-color: #fffffe;
+  padding: 1rem;
+}
+
+/* Page Header Styling */
+.page-title {
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+}
+
+.page-subtitle {
+  color: #716040;
+  font-size: 1.1rem;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Form Section Styling */
+.form-section {
+  background-color: #fffffe;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaddcf;
+}
+
+.form-section-title {
+  color: #716040;
+  font-family: 'Playfair Display', serif;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eaddcf;
+  display: flex;
+  align-items: center;
+}
+
+/* Custom Form Control Styles */
+.form-control,
+.form-select {
+  background-color: #eaddcf;
+  border: 1px solid #eaddcf;
+  color: #020826;
+  padding: 0.75rem 1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-control:focus,
+.form-select:focus {
+  background-color: #eaddcf;
+  border-color: #8c7851;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+  color: #020826;
+}
+
+.form-control::placeholder {
+  color: #716040;
+  opacity: 0.8;
+}
+
+/* Style for file inputs to match other fields */
+.form-control[type="file"] {
+  line-height: 1.8;
+}
+
+/* Custom Switch Styling */
+.form-check-input:checked {
+  background-color: #8c7851;
+  border-color: #8c7851;
+}
+
+.form-check-input:focus {
+  border-color: #716040;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+}
+
+/* Button Styling */
+.btn-primary {
+  background-color: #8c7851;
+  border-color: #8c7851;
+  color: #fffffe;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+  background-color: #716040;
+  border-color: #716040;
+}
+
+.btn-secondary {
+  background-color: #eaddcf;
+  border-color: #eaddcf;
+  color: #716040;
+  padding: 0.75rem 1.5rem;
+  font-weight: 500;
+}
+
+.btn-secondary:hover, .btn-secondary:focus {
+  background-color: #dcd0c1;
+  border-color: #dcd0c1;
+}
+
+/* Validation Feedback */
+.invalid-feedback {
+  font-weight: 500;
+}
+.input-group input[type="date"] {
+  flex: 60%;
+}
+
+.input-group input[type="time"] {
+  flex: 40%;
+}
+

@@ -1,0 +1,157 @@
+:host {
+  display: block;
+  background: #fffffe;
+  padding: 1rem;
+}
+
+.page-header {
+  border-bottom: 2px solid #eaddcf;
+  padding-bottom: 1rem;
+}
+
+.page-title {
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #716040;
+  margin: 0.25rem 0 0;
+}
+
+.content-panel {
+  background: #fffffe;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaddcf;
+}
+
+.panel-title {
+  font-family: 'Playfair Display', serif;
+  color: #716040;
+  margin-bottom: 15px;
+}
+
+.label {
+  color: #716040;
+  font-weight: 600;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.input {
+  border-color: #eaddcf;
+}
+
+.input:focus {
+  border-color: #8c7851;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+}
+
+.btn-row {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.btn-primary {
+  background: #8c7851;
+  border-color: #8c7851;
+}
+
+.btn-primary:hover {
+  background: #716040;
+  border-color: #716040;
+}
+
+.btn-secondary {
+  background: #eaddcf;
+  border: none;
+  color: #716040;
+  font-weight: 600;
+}
+
+.btn-secondary:hover {
+  background: #dcd0c1;
+}
+
+.file-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.file-list li {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid #eee;
+  padding: 12px 0;
+}
+
+.left-file {
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: 600;
+  color: #020826;
+}
+
+.file-type {
+  color: #716040;
+  font-size: 0.9rem;
+  margin-top: 3px;
+}
+
+.small {
+  color: #716040;
+  font-size: 0.9rem;
+}
+
+.status-note {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.info-text {
+  color: #716040;
+  font-size: 0.95rem;
+}
+
+.badge {
+  padding: 0.45em 0.9em;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.status-upcoming {
+  background-color: #cfe2ff;
+  color: #0a58ca;
+}
+
+.status-ongoing {
+  background-color: #d1e7dd;
+  color: #146c43;
+}
+
+.status-completed {
+  background-color: #f8d7da;
+  color: #a4202c;
+}
+
+.btn-certificate {
+  background: #5d5048;
+  border: none;
+  color: #ffffff;
+  font-weight: 600;
+}
+
+.btn-certificate:hover {
+  background: #4a3f39;
+}

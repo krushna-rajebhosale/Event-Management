@@ -1,0 +1,99 @@
+<div class="container my-5">
+  <div class="page-header mb-4">
+    <div>
+      <h1 class="page-title">Event Media Sharing</h1>
+      <p class="page-subtitle">
+        Upload event photos/videos and send them to all registered students.
+      </p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="alert alert-info py-2">Loading...</div>
+  <div *ngIf="error" class="alert alert-danger py-2">{{ error }}</div>
+  <div *ngIf="message" class="alert alert-success py-2">{{ message }}</div>
+
+  <div class="content-panel">
+    <label class="label">Select Event</label>
+    <select class="form-select input" [(ngModel)]="selectedEventId" (change)="onEventChange()">
+      <option [ngValue]="null">-- Select Event --</option>
+      <option *ngFor="let e of events" [ngValue]="e.id">
+        {{ e.name }} - {{ e.status }} ({{ e.date | date:'MMM d, y' }})
+      </option>
+    </select>
+
+    <div class="status-note mt-3" *ngIf="selectedEventId">
+      <span class="badge"
+            [ngClass]="{
+              'status-upcoming': selectedEventStatus === 'Upcoming',
+              'status-ongoing': selectedEventStatus === 'Ongoing',
+              'status-completed': selectedEventStatus === 'Completed'
+            }">
+        {{ selectedEventStatus || 'Unknown' }}
+      </span>
+
+      <span class="ms-2 info-text" *ngIf="selectedEventStatus === 'Completed'">
+        You can upload and send media for this completed event.
+      </span>
+
+      <span class="ms-2 info-text" *ngIf="selectedEventStatus === 'Ongoing'">
+        You can upload media while the event is running.
+      </span>
+
+      <span class="ms-2 info-text" *ngIf="selectedEventStatus === 'Upcoming'">
+        You can pre-upload media if needed.
+      </span>
+    </div>
+
+    <div class="mt-4">
+      <label class="label">Upload Images / Videos (Multiple)</label>
+      <input
+        class="form-control input"
+        type="file"
+        multiple
+        accept="image/*,video/*"
+        (change)="onFilesSelected($event)"
+      />
+
+      <div class="small mt-2" *ngIf="selectedFiles.length > 0">
+        Selected: <b>{{ selectedFiles.length }}</b> file(s)
+      </div>
+
+      <div class="btn-row mt-3">
+  <button class="btn btn-primary" (click)="upload()" [disabled]="isLoading">
+    {{ isLoading ? 'Uploading...' : 'Upload Files' }}
+  </button>
+
+  <button
+    class="btn btn-secondary"
+    (click)="sendToAll()"
+    [disabled]="isLoading || uploadedFiles.length === 0">
+    {{ isLoading ? 'Sending...' : 'Send To All Registered Emails' }}
+  </button>
+
+  <button
+    class="btn btn-certificate"
+    (click)="sendCertificates()"
+    [disabled]="isLoading || !selectedEventId">
+    {{ isLoading ? 'Sending...' : 'Send Certificates to Checked-In Users' }}
+  </button>
+</div>
+    </div>
+  </div>
+
+  <div class="content-panel mt-4" *ngIf="selectedEventId">
+    <h2 class="panel-title">Uploaded Files</h2>
+
+    <div *ngIf="uploadedFiles.length === 0" class="text-muted">
+      No files uploaded for this event.
+    </div>
+
+    <ul class="file-list" *ngIf="uploadedFiles.length > 0">
+      <li *ngFor="let f of uploadedFiles">
+        <div class="left-file">
+          <span class="file-name">{{ f.file_name }}</span>
+          <span class="file-type">{{ f.mime_type }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

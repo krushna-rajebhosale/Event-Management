@@ -1,0 +1,238 @@
+<div class="layout-container" [class.sidebar-collapsed]="sidebarCollapsed">
+  <nav class="navbar navbar-expand-lg navbar-dark top-navbar">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" routerLink="/dashboard">
+        <img
+          src="assets/event-management.svg"
+          alt="AppIcon"
+          style="height: 50px"
+        />
+        <span class="brand-text">Evently</span>
+      </a>
+
+      <button class="navbar-toggler" type="button" (click)="toggleMobileNav()">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" [class.show]="showMobileNav">
+        <div class="dropdown ms-auto">
+          <button
+            class="btn btn-link dropdown-toggle user-dropdown"
+            type="button"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+           <span class="top-user-avatar me-2">
+  <ng-container *ngIf="currentUser.avatar; else topInitialsAvatar">
+    <img [src]="currentUser.avatar" alt="User Avatar" class="top-avatar-image" />
+  </ng-container>
+
+  <ng-template #topInitialsAvatar>
+    <span>{{ getUserInitials() }}</span>
+  </ng-template>
+</span>
+            <span class="d-none d-md-inline">{{ getUserDisplayName() }}</span>
+          </button>
+
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="navigateTo('/profile')">
+                <i class="fas fa-user me-2"></i>
+                Profile
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="navigateTo('/settings')">
+                <i class="fas fa-cog me-2"></i>
+                Settings
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a class="dropdown-item" href="javascript:void(0)" (click)="logout()">
+                <i class="fas fa-sign-out-alt me-2"></i>
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-layout d-flex">
+    <nav class="sidebar" [class.collapsed]="sidebarCollapsed">
+      <div class="sidebar-header">
+        <div class="sidebar-user-info">
+          <div class="user-avatar">
+            <ng-container *ngIf="currentUser.avatar; else initialsAvatar">
+              <img [src]="currentUser.avatar" alt="User Avatar" class="avatar-image" />
+            </ng-container>
+
+            <ng-template #initialsAvatar>
+              <span>{{ getUserInitials() }}</span>
+            </ng-template>
+          </div>
+
+          <div class="user-details">
+            <span class="user-name">{{ getUserDisplayName() }}</span>
+            <span class="user-affiliation">{{ currentUser.affiliation || 'Organization Name' }}</span>
+          </div>
+        </div>
+
+        <button class="btn btn-link sidebar-toggle" (click)="toggleSidebar()">
+          <i class="fas" [ngClass]="sidebarCollapsed ? 'fa-caret-right' : 'fa-caret-left'"></i>
+        </button>
+      </div>
+
+      <ul class="sidebar-nav">
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/dashboard"
+            routerLinkActive="active"
+            data-tooltip="Dashboard"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-tachometer-alt"></i>
+            <span class="sidebar-text">Dashboard</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/create-event"
+            routerLinkActive="active"
+            data-tooltip="Create Event"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-plus-circle"></i>
+            <span class="sidebar-text">Create Event</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/manage-events"
+            routerLinkActive="active"
+            data-tooltip="Manage Events"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-calendar-check"></i>
+            <span class="sidebar-text">Manage Events</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/registrations"
+            routerLinkActive="active"
+            data-tooltip="Registrations"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-users"></i>
+            <span class="sidebar-text">Registrations</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/check-ins"
+            routerLinkActive="active"
+            data-tooltip="Check-ins"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-check-circle"></i>
+            <span class="sidebar-text">Check-ins</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/event-media"
+            routerLinkActive="active"
+            data-tooltip="Event Media"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-images"></i>
+            <span class="sidebar-text">Event Media</span>
+          </a>
+        </li>
+
+       <!---->
+          <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/reports"
+            routerLinkActive="active"
+            data-tooltip="Reports"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-chart-bar"></i>
+            <span class="sidebar-text">Reports</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/settings"
+            routerLinkActive="active"
+            data-tooltip="Settings"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-cog"></i>
+            <span class="sidebar-text">Settings</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            routerLink="/support"
+            routerLinkActive="active"
+            data-tooltip="Help & Support"
+            (click)="closeMobileNavAfterRoute()"
+          >
+            <i class="fas fa-question-circle"></i>
+            <span class="sidebar-text">Help & Support</span>
+          </a>
+        </li>
+
+        <li class="sidebar-item">
+          <a
+            class="sidebar-link"
+            href="javascript:void(0)"
+            (click)="logout()"
+            data-tooltip="Logout"
+          >
+            <i class="fas fa-sign-out-alt"></i>
+            <span class="sidebar-text">Logout</span>
+          </a>
+
+      </ul>
+    </nav>
+
+    <main class="main-content flex-grow-1">
+      <div class="content-wrapper">
+        <router-outlet></router-outlet>
+      </div>
+
+      <footer class="app-footer">
+        <small>
+          <i class="fas fa-feather"></i>
+          Icons and illustrations by
+          <a href="https://fontawesome.com/" target="_blank" rel="noopener noreferrer">Font Awesome</a>,
+          <a href="https://www.freepik.com/" target="_blank" rel="noopener noreferrer">Freepik</a>,
+          and
+          <a href="https://www.flaticon.com/" target="_blank" rel="noopener noreferrer">Flaticon</a>.
+        </small>
+      </footer>
+    </main>
+  </div>
+</div>

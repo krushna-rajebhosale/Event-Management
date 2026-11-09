@@ -1,0 +1,150 @@
+.register-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg,#f8f5f1,#f0e6d8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 420px;
+  background: white;
+  border-radius: 14px;
+  padding: 28px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+}
+
+.title {
+  text-align: center;
+  font-family: 'Playfair Display', serif;
+  color: #020826;
+  margin-bottom: 20px;
+}
+
+.event-box {
+  background: #f8f5f1;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+.event-name {
+  font-weight: 600;
+  font-size: 18px;
+  margin-bottom: 4px;
+}
+
+.event-meta {
+  font-size: 14px;
+  color: #716040;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+}
+
+label {
+  font-size: 14px;
+  margin-top: 10px;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #eaddcf;
+  margin-bottom: 6px;
+}
+
+.input:focus {
+  border-color: #8c7851;
+  outline: none;
+}
+
+.btn-register {
+  margin-top: 15px;
+  padding: 12px;
+  border: none;
+  border-radius: 8px;
+  background: #8c7851;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.btn-register:hover {
+  background: #716040;
+}
+
+.success {
+  background: #e6f7ec;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.error {
+  background: #fde8e8;
+  padding: 10px;
+  border-radius: 6px;
+  margin-bottom: 15px;
+}
+
+.ticket-container {
+  text-align: center;
+}
+
+.ticket-card {
+  background: white;
+  border-radius: 12px;
+  border: 1px solid #eaddcf;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.ticket-title {
+  font-family: 'Playfair Display', serif;
+}
+
+.ticket-success {
+  color: green;
+  font-weight: 600;
+}
+
+.ticket-details {
+  text-align: left;
+  margin-top: 10px;
+}
+
+.qr-area {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.small {
+  font-size: 12px;
+  color: #777;
+}
+
+.btn-download {
+  width: 100%;
+  padding: 10px;
+  background: #8c7851;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  margin-bottom: 10px;
+}
+
+.btn-secondary {
+  width: 100%;
+  padding: 10px;
+  background: #eaddcf;
+  border: none;
+  border-radius: 8px;
+}

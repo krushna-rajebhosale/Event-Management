@@ -1,0 +1,174 @@
+<div class="container my-5">
+
+  <!-- VIEW 1: EVENT SELECTION -->
+  <div *ngIf="!selectedEvent; else checkInDetails">
+    <div class="page-header mb-4">
+      <div>
+        <h1 class="page-title">Select an Event for Check-in</h1>
+        <p class="page-subtitle">Choose an ongoing or upcoming event to begin.</p>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="alert alert-info">Loading events...</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let event of allEvents">
+        <div class="event-card h-100" (click)="selectEvent(event)">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="event-name me-2">{{ event.name }}</h5>
+              <span class="event-status" [ngClass]="'status-' + event.status.toLowerCase()">
+                {{ event.status }}
+              </span>
+            </div>
+            <p class="event-date text-muted">
+              <i class="fas fa-calendar-alt me-2"></i>{{ event.date | date:'fullDate' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: CHECK-IN DETAILS -->
+  <ng-template #checkInDetails>
+    <div class="page-header mb-4">
+      <div>
+        <button class="btn btn-back mb-2" (click)="goBackToEvents()">
+          <i class="fas fa-arrow-left me-2"></i>Back to Events
+        </button>
+        <h1 class="page-title">Live Event Check-in</h1>
+        <p class="page-subtitle">
+          Currently managing: <strong>{{ selectedEvent?.name || 'Unknown Event' }}</strong>
+        </p>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="alert alert-info">Loading attendees...</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="row g-4">
+      <!-- Left Column -->
+      <div class="col-lg-7">
+        <div class="stats-container">
+          <div class="stat-card">
+            <div class="stat-value">{{ checkedInCount }} / {{ totalAttendeeCount }}</div>
+            <div class="stat-label">Checked In</div>
+          </div>
+
+          <div class="stat-card time-card">
+            <div class="stat-value time">{{ currentTime | date:'h:mm:ss a' }}</div>
+            <div class="stat-label date">{{ currentTime | date:'fullDate' }}</div>
+          </div>
+        </div>
+
+        <div class="attendee-list-container mt-4">
+          <div class="list-header">
+            <h5 class="list-title">Attendees ({{ totalAttendeeCount }})</h5>
+            <div class="input-group search-bar">
+              <span class="input-group-text"><i class="fas fa-search"></i></span>
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search attendees..."
+                [(ngModel)]="searchTerm"
+                (input)="filterAttendees()">
+            </div>
+          </div>
+
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item" *ngFor="let attendee of filteredAttendees">
+              <div class="attendee-info">
+                <div class="attendee-name">{{ attendee.name }}</div>
+                <div class="attendee-email">{{ attendee.email }}</div>
+              </div>
+
+              <div class="attendee-actions">
+                <span class="badge"
+                      [ngClass]="{
+                        'status-checked-in': attendee.status === 'Checked In',
+                        'status-pending': attendee.status === 'Pending'
+                      }">
+                  {{ attendee.status }}
+                </span>
+
+                <button class="btn btn-sm btn-check-in"
+                        (click)="checkIn(attendee.id)"
+                        [disabled]="attendee.status === 'Checked In'">
+                  Check In
+                </button>
+              </div>
+            </li>
+
+            <li class="list-group-item text-center p-4" *ngIf="filteredAttendees.length === 0">
+              No attendees found.
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Right Column -->
+      <div class="col-lg-5">
+        <div class="scanner-container">
+          <div class="scanner-header">
+            <h5 class="scanner-title">QR Scanner</h5>
+            <p class="scanner-subtitle">
+              Start the camera and scan the attendee QR code. Check-in happens automatically.
+            </p>
+          </div>
+
+          <div class="camera-box" [class.camera-active]="isScannerRunning">
+            <ngx-scanner-qrcode
+              #scanner
+              class="qr-reader"
+              [config]="scannerConfig"
+              (event)="onScanResult($event)">
+            </ngx-scanner-qrcode>
+            
+
+            <div class="scanner-overlay" *ngIf="!isScannerRunning">
+              <i class="fas fa-qrcode scanner-overlay-icon"></i>
+              <p class="scanner-overlay-text">Camera preview will appear here</p>
+            </div>
+
+            <div class="scanner-processing" *ngIf="isProcessingScan">
+              <div class="spinner-border spinner-border-sm me-2" role="status"></div>
+              Processing QR...
+            </div>
+          </div>
+
+          <div class="scanner-actions">
+            <button class="btn btn-primary btn-scan"
+                    (click)="startCamera(scanner)"
+                    [disabled]="isScannerRunning">
+              <i class="fas fa-camera me-2"></i>Start Camera
+            </button>
+
+            <button class="btn btn-stop mt-2"
+                    (click)="stopCamera(scanner)"
+                    [disabled]="!isScannerRunning">
+              <i class="fas fa-stop-circle me-2"></i>Stop Camera
+            </button>
+          </div>
+
+          <div class="scan-help-text mt-3">
+            Point the camera at the QR code. A successful scan will check in the attendee instantly.
+          </div>
+
+          <div class="last-check-in-info" *ngIf="lastCheckIn">
+            <div class="info-title">Last Check-in</div>
+            <div class="info-name">{{ lastCheckIn.name }}</div>
+            <div class="info-status"
+                 [ngClass]="{
+                   'text-success': lastCheckIn.status === 'Checked In',
+                   'text-danger': lastCheckIn.status !== 'Checked In'
+                 }">
+              Status: {{ lastCheckIn.status }} at {{ lastCheckIn.time | date:'h:mm:ss a' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>

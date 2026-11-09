@@ -1,0 +1,101 @@
+<!-- The main container uses flexbox to center the card in the viewport -->
+<div class="signup-container">
+  <div class="signup-card">
+    <div class="row g-0 h-100">
+      
+      <!-- Left Column: Signup Form -->
+      <div class="col-lg-6">
+        <div class="signup-form-section">
+          <!-- Brand/Logo -->
+          <div class="brand">
+            <img src="assets/event-management.svg" alt="Evently Logo" class="brand-icon" onerror="this.onerror=null;this.src='https://placehold.co/40x40/8c7851/fff8f0?text=E';">
+            <span class="brand-name">Evently</span>
+          </div>
+          
+          <!-- Welcome Text -->
+          <div class="welcome-section">
+            <h1 class="welcome-title" style="color: #a88a5b;">Create Your Account</h1>
+            <p class="welcome-subtitle">Join us to manage events like never before.</p>
+          </div>
+          
+          <!-- Signup Form -->
+          <form (ngSubmit)="onSubmit()" #signupForm="ngForm" class="signup-form">
+            <!-- Full Name -->
+            <div class="input-with-icon mb-3">
+              <i class="fas fa-user input-icon"></i>
+              <input 
+                type="text" 
+                class="form-control custom-input" 
+                id="fullName"
+                name="fullName"
+                [(ngModel)]="fullName"
+                placeholder="Full Name"
+                required
+                #fullNameField="ngModel">
+            </div>
+            
+            <!-- Email -->
+            <div class="input-with-icon mb-3">
+               <i class="fas fa-envelope input-icon"></i>
+              <input 
+                type="email" 
+                class="form-control custom-input" 
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="Email Address"
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$"
+                #emailField="ngModel">
+            </div>
+
+            <!-- Password -->
+            <div class="input-with-icon mb-3">
+              <i class="fas fa-fingerprint input-icon"></i>
+              <input 
+                [type]="showPassword ? 'text' : 'password'"
+                class="form-control custom-input" 
+                id="password"
+                name="password"
+                [(ngModel)]="password"
+                placeholder="Create Password"
+                required
+                minlength="8"
+                #passwordField="ngModel">
+              <button type="button" class="password-toggle-btn" (click)="togglePassword()">
+                <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+              </button>
+            </div>
+             <div *ngIf="passwordField.invalid && passwordField.touched" class="invalid-feedback d-block mt-0 mb-2">
+                Password must be at least 8 characters.
+             </div>
+
+            <!-- Submit Button -->
+            <button 
+              type="submit" 
+              class="btn custom-btn w-100"
+              [disabled]="signupForm.invalid || isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+              {{ isLoading ? 'Creating...' : 'Create Account' }}
+            </button>
+          </form>
+          
+          <!-- Sign In Link -->
+          <div class="signin-text mt-4">
+            <span>Already have an account? </span>
+            <a routerLink="/login" class="signin-link">Sign In</a>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Right Column: Illustration -->
+      <div class="col-lg-6 d-none d-lg-flex illustration-section">
+        <img 
+          src="assets/signup-theme.png" 
+          alt="Illustration of people planning an event" 
+          class="custom-illustration"
+          onerror="this.onerror=null;this.src='https://placehold.co/450x600/f5eadd/6b4c3b?text=Evently';">
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,129 @@
+<div class="container my-5">
+  <div class="profile-card">
+    <h1 class="profile-title">My Profile</h1>
+    <p class="profile-subtitle">Edit your account details</p>
+
+    <div *ngIf="isLoading" class="alert alert-info py-2">Loading...</div>
+    <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="saveProfile()">
+      <div class="mb-3 text-center">
+        <div class="profile-avatar-preview">
+          <img *ngIf="profile.profile_image; else initialsBlock" [src]="profile.profile_image" alt="Profile" />
+          <ng-template #initialsBlock>
+            <span>{{ profile.name ? profile.name.charAt(0).toUpperCase() : 'U' }}</span>
+          </ng-template>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Profile Photo URL</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="profile.profile_image"
+          name="profile_image"
+          placeholder="Paste image URL here"
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Name</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="profile.name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          [(ngModel)]="profile.email"
+          name="email"
+          required
+        />
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+          Save Profile
+        </button>
+      </div>
+    </form>
+
+    <hr class="my-4" />
+
+    <h5 class="section-title">Change Password</h5>
+
+    <form (ngSubmit)="changePassword()">
+      <div class="mb-3">
+        <label class="form-label">Current Password</label>
+        <div class="password-wrapper">
+          <input
+            [type]="showCurrentPassword ? 'text' : 'password'"
+            class="form-control pe-5"
+            [(ngModel)]="passwordForm.currentPassword"
+            name="currentPassword"
+          />
+          <button
+            type="button"
+            class="password-toggle-btn"
+            (click)="toggleCurrentPassword()"
+          >
+            <i [class]="showCurrentPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">New Password</label>
+        <div class="password-wrapper">
+          <input
+            [type]="showNewPassword ? 'text' : 'password'"
+            class="form-control pe-5"
+            [(ngModel)]="passwordForm.newPassword"
+            name="newPassword"
+          />
+          <button
+            type="button"
+            class="password-toggle-btn"
+            (click)="toggleNewPassword()"
+          >
+            <i [class]="showNewPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label">Confirm New Password</label>
+        <div class="password-wrapper">
+          <input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            class="form-control pe-5"
+            [(ngModel)]="passwordForm.confirmPassword"
+            name="confirmPassword"
+          />
+          <button
+            type="button"
+            class="password-toggle-btn"
+            (click)="toggleConfirmPassword()"
+          >
+            <i [class]="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+          </button>
+        </div>
+      </div>
+
+      <div class="text-end">
+        <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+          Change Password
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

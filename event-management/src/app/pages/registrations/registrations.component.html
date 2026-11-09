@@ -1,0 +1,225 @@
+<div class="container my-5">
+
+  <!-- VIEW 1: EVENT SELECTION LIST -->
+  <div *ngIf="!selectedEvent; else registrationDetails">
+    <div class="page-header mb-4">
+      <div>
+        <h1 class="page-title">Select an Event</h1>
+        <p class="page-subtitle">Choose an event to view its registration details.</p>
+      </div>
+    </div>
+    
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let event of allEvents">
+        <div class="event-card h-100" (click)="selectEvent(event)">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start mb-2">
+              <h5 class="event-name me-2">{{ event.name }}</h5>
+              <span class="event-status" [ngClass]="'status-' + event.status.toLowerCase()">{{ event.status }}</span>
+            </div>
+            <p class="event-date text-muted"><i class="fas fa-calendar-alt me-2"></i>{{ event.date | date:'fullDate' }}</p>
+          </div>
+          <div class="card-footer">
+            <i class="fas fa-users me-2"></i>
+           {{ event.registrationCount }} / {{ event.capacity }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- VIEW 2: REGISTRATION DETAILS TABLE -->
+  <ng-template #registrationDetails>
+    <div class="page-header mb-4">
+      <div>
+        <button class="btn btn-back mb-2" (click)="goBackToEvents()"><i class="fas fa-arrow-left me-2"></i>Back to Events</button>
+        <h1 class="page-title">{{ selectedEvent?.name }}</h1>
+        <p class="page-subtitle">View and manage all attendee registrations for this event.</p>
+      </div>
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="exportToCSV()">
+          <i class="fas fa-file-csv me-2"></i>Export to CSV
+        </button>
+      </div>
+    </div>
+
+    <div class="action-bar mb-4">
+      <div class="input-group search-bar">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search by name or email..." 
+          [(ngModel)]="searchTerm" 
+          (input)="filterAndSort()">
+      </div>
+      <div class="sort-control">
+        <label for="sortOption" class="form-label me-2">Sort by:</label>
+        <select class="form-select" id="sortOption" [(ngModel)]="sortOption" (change)="filterAndSort()">
+          <option value="date">Registration Date</option>
+          <option value="name">Attendee Name (A-Z)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="table-container">
+      <div class="table-responsive">
+        <table class="table registration-table">
+          <thead>
+            <tr>
+              <th>Attendee</th>
+              <th>Ticket Type</th>
+              <th>Registered On</th>
+              <!-- FIX: Added a specific class for styling -->
+              <th class="status-column">Status</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let reg of filteredRegistrations">
+              <td>
+                <div class="attendee-info">
+                  <div class="attendee-name">{{ reg.name }}</div>
+                  <div class="attendee-email">{{ reg.email }}</div>
+                </div>
+              </td>
+              <td>{{ reg.ticketType }}</td>
+              <td>{{ reg.registrationDate | date:'MMM d, y, h:mm a' }}</td>
+              <!-- FIX: Added a specific class for styling -->
+              <td class="status-column">
+                <span class="badge" [ngClass]="{
+                  'status-checked-in': reg.status === 'Checked In',
+                  'status-pending': reg.status === 'Pending',
+                  'status-cancelled': reg.status === 'Cancelled'
+                }">
+                  {{ reg.status }}
+                </span>
+              </td>
+              <td class="text-end">
+                <div class="dropdown">
+                  <button class="btn btn-sm btn-actions" type="button" data-bs-toggle="dropdown">
+                    <i class="fas fa-ellipsis-h"></i>
+                  </button>
+                  <ul class="dropdown-menu dropdown-menu-end">
+                    <li>
+                   <button class="dropdown-item" type="button" (click)="viewDetails(reg.id)">
+                  <i class="fas fa-eye me-2"></i>View Details
+    </button>
+  </li>
+  <li>
+    <button class="dropdown-item" type="button" (click)="resendConfirmation(reg.id)">
+      <i class="fas fa-envelope me-2"></i>Resend Confirmation
+    </button>
+  </li>
+</ul>
+                </div>
+              </td>
+            </tr>
+            <tr *ngIf="filteredRegistrations.length === 0">
+              <td colspan="5" class="text-center p-5">No registrations found for this event.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </ng-template>
+
+</div>
+<!-- Registration Details Modal -->
+<div class="modal fade" id="registrationDetailsModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content custom-modal" *ngIf="selectedRegistration">
+      <div class="modal-header">
+        <h5 class="modal-title">
+          <i class="fas fa-user-circle me-2"></i>Registration Details
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <span class="detail-label">Name</span>
+            <span class="detail-value">{{ selectedRegistration.attendee_name }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Email</span>
+            <span class="detail-value">{{ selectedRegistration.attendee_email }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Ticket Type</span>
+            <span class="detail-value">{{ selectedRegistration.ticket_type || '-' }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Status</span>
+            <span class="detail-value">{{ selectedRegistration.status || '-' }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Registered On</span>
+            <span class="detail-value">
+              {{ selectedRegistration.registered_at | date:'MMM d, y, h:mm a' }}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Checked In At</span>
+            <span class="detail-value">
+              {{ selectedRegistration.checked_in_at ? (selectedRegistration.checked_in_at | date:'MMM d, y, h:mm a') : '-' }}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Event</span>
+            <span class="detail-value">{{ selectedRegistration.event_name || '-' }}</span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Start Time</span>
+            <span class="detail-value">
+              {{ selectedRegistration.start_at | date:'MMM d, y, h:mm a' }}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">End Time</span>
+            <span class="detail-value">
+              {{ selectedRegistration.end_at | date:'MMM d, y, h:mm a' }}
+            </span>
+          </div>
+
+          <div class="detail-item">
+            <span class="detail-label">Venue</span>
+            <span class="detail-value">
+              {{ selectedRegistration.venue_name || selectedRegistration.venue_address || '-' }}
+            </span>
+          </div>
+
+          <div class="detail-item full-width">
+            <span class="detail-label">QR Code</span>
+            <span class="detail-value qr-value">{{ selectedRegistration.qr_code || '-' }}</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Professional Toast -->
+<div class="toast-container position-fixed top-0 end-0 p-3">
+  <div id="actionToast" class="toast border-0" [ngClass]="toastClass" role="alert">
+    <div class="d-flex">
+      <div class="toast-body">
+        {{ toastMessage }}
+      </div>
+      <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>

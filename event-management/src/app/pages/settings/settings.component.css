@@ -1,0 +1,115 @@
+/* Apply a global background color */
+:host {
+  display: block;
+  background-color: #fffffe;
+  padding: 1rem;
+}
+
+/* Page Header */
+.page-header {
+  border-bottom: 2px solid #eaddcf;
+  padding-bottom: 1rem;
+}
+
+.page-title {
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #716040;
+  font-size: 1rem;
+  margin: 0.25rem 0 0;
+}
+
+/* Settings Navigation */
+.settings-nav .list-group-item {
+  background-color: #fffffe;
+  border: 1px solid #eaddcf;
+  color: #716040;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+
+.settings-nav .list-group-item:hover {
+  background-color: #f8f5f1;
+}
+
+.settings-nav .list-group-item.active {
+  background-color: #8c7851;
+  border-color: #8c7851;
+  color: #fffffe;
+}
+
+/* Settings Content Area */
+.settings-content {
+  background-color: #fffffe;
+  border: 1px solid #eaddcf;
+  border-radius: 8px;
+  padding: 2rem;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  color: #020826;
+  margin-bottom: 0.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eaddcf;
+}
+
+.section-subtitle {
+  font-size: 0.9rem;
+  color: #716040;
+  margin-top: -0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+/* Form Styling */
+.form-label {
+  color: #716040;
+  font-weight: 500;
+}
+
+.form-control, .form-select {
+  background-color: #f8f5f1;
+  border-color: #eaddcf;
+}
+.form-control:focus, .form-select:focus {
+  background-color: #fffffe;
+  border-color: #8c7851;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+}
+
+/* Custom Switch Styling */
+.form-check-input:checked {
+  background-color: #8c7851;
+  border-color: #8c7851;
+}
+
+.form-check-input:focus {
+  border-color: #716040;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+}
+
+.payment-placeholder {
+  text-align: center;
+  padding: 3rem;
+  border: 2px dashed #eaddcf;
+  border-radius: 8px;
+  color: #716040;
+}
+
+.btn-primary {
+  background-color: #8c7851;
+  border-color: #8c7851;
+  color: #fffffe;
+  font-weight: 500;
+  padding: 0.5rem 1.5rem;
+}
+.btn-primary:hover {
+  background-color: #716040;
+  border-color: #716040;
+}

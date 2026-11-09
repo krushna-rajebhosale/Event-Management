@@ -1,0 +1,92 @@
+<div class="container my-5">
+  <!-- Page Header -->
+  <div class="page-header text-center mb-5">
+    <h1 class="page-title">Help & Support</h1>
+    <p class="page-subtitle">How can we help you today?</p>
+  </div>
+
+  <!-- Search Section -->
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="input-group search-bar mb-5">
+        <span class="input-group-text"><i class="fas fa-search"></i></span>
+        <input 
+          type="text" 
+          class="form-control" 
+          placeholder="Search for answers..."
+          [(ngModel)]="searchTerm"
+          (input)="filterFaqs()">
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-5">
+    <!-- Left Column: FAQs -->
+    <div class="col-lg-7">
+      <h5 class="section-title">Frequently Asked Questions</h5>
+      <div class="accordion" id="faqAccordion">
+        <div class="accordion-item" *ngFor="let category of filteredFaqCategories; let i = index">
+          <h2 class="accordion-header" [id]="'heading' + i">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" [attr.data-bs-target]="'#collapse' + i" [attr.aria-expanded]="i === 0" [attr.aria-controls]="'collapse' + i">
+              {{ category.title }}
+            </button>
+          </h2>
+          <div [id]="'collapse' + i" class="accordion-collapse collapse" [class.show]="i === 0" [attr.aria-labelledby]="'heading' + i" data-bs-parent="#faqAccordion">
+            <div class="accordion-body">
+              <div class="faq-item" *ngFor="let item of category.questions">
+                <strong>Q: {{ item.q }}</strong>
+                <p>A: {{ item.a }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="filteredFaqCategories.length === 0" class="text-center p-4">
+          <p class="text-muted">No results found for "{{ searchTerm }}".</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Contact Form -->
+    <!-- Right Column: Contact Form -->
+<div class="col-lg-5">
+  <div class="contact-form-container">
+    <h5 class="section-title"><i class="fas fa-feather"></i> Still need help?</h5>
+    <p class="section-subtitle">Submit a support ticket and we'll get back to you.</p>
+
+    <!-- ✅ Success / Error -->
+    <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+    <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+    <form (ngSubmit)="submitTicket()">
+      <div class="mb-3">
+        <label for="name" class="form-label">Your Name</label>
+        <input type="text" id="name" class="form-control"
+               [(ngModel)]="contact.name" name="name" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="email" class="form-label">Your Email</label>
+        <input type="email" id="email" class="form-control"
+               [(ngModel)]="contact.email" name="email" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="subject" class="form-label">Subject</label>
+        <input type="text" id="subject" class="form-control"
+               [(ngModel)]="contact.subject" name="subject" required>
+      </div>
+
+      <div class="mb-3">
+        <label for="message" class="form-label">Message</label>
+        <textarea id="message" class="form-control" rows="5"
+                  [(ngModel)]="contact.message" name="message" required></textarea>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100" [disabled]="isSending">
+        {{ isSending ? 'Sending...' : 'Submit Ticket' }}
+      </button>
+    </form>
+  </div>
+</div>
+  </div>
+</div>

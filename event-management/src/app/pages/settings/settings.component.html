@@ -1,0 +1,229 @@
+<div class="container my-5">
+  <!-- Page Header -->
+  <div class="page-header mb-4">
+    <div>
+      <h1 class="page-title">Event Settings</h1>
+      <p class="page-subtitle">Customize default behaviors for your events.</p>
+    </div>
+  </div>
+
+  <!-- Messages -->
+  <div *ngIf="isLoading" class="alert alert-info py-2">Loading settings...</div>
+  <div *ngIf="successMessage" class="alert alert-success py-2">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="alert alert-danger py-2">{{ errorMessage }}</div>
+
+  <div class="row g-4">
+    <!-- Left Column: Navigation -->
+    <div class="col-lg-3">
+      <div class="settings-nav">
+        <ul class="list-group">
+          <li class="list-group-item"
+              [class.active]="activeSection === 'eventDefaults'"
+              (click)="setActiveSection('eventDefaults')">
+            <i class="fas fa-calendar-alt me-2"></i>Event Defaults
+          </li>
+
+          <li class="list-group-item"
+              [class.active]="activeSection === 'registration'"
+              (click)="setActiveSection('registration')">
+            <i class="fas fa-user-check me-2"></i>Registration
+          </li>
+
+          <li class="list-group-item"
+              [class.active]="activeSection === 'email'"
+              (click)="setActiveSection('email')">
+            <i class="fas fa-envelope me-2"></i>Email Templates
+          </li>
+
+          <li class="list-group-item"
+              [class.active]="activeSection === 'payment'"
+              (click)="setActiveSection('payment')">
+            <i class="fas fa-credit-card me-2"></i>Payment
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Right Column: Content -->
+    <div class="col-lg-9">
+      <div class="settings-content">
+
+        <!-- Event Defaults -->
+        <div *ngIf="activeSection === 'eventDefaults'">
+          <h5 class="section-title">Event Defaults</h5>
+          <p class="section-subtitle">Set default values for when you create a new event.</p>
+
+          <form (ngSubmit)="saveEventDefaults()">
+            <div class="mb-3">
+              <label for="defaultCapacity" class="form-label">Default Capacity</label>
+              <input type="number"
+                     id="defaultCapacity"
+                     class="form-control"
+                     [(ngModel)]="eventDefaults.defaultCapacity"
+                     name="defaultCapacity">
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="defaultTicketPrice" class="form-label">Default Ticket Price</label>
+                <input type="number"
+                       id="defaultTicketPrice"
+                       class="form-control"
+                       [(ngModel)]="eventDefaults.defaultTicketPrice"
+                       name="defaultTicketPrice">
+              </div>
+
+              <div class="col-md-6 mb-3">
+                <label for="defaultCurrency" class="form-label">Default Currency</label>
+                <select id="defaultCurrency"
+                        class="form-select"
+                        [(ngModel)]="eventDefaults.defaultCurrency"
+                        name="defaultCurrency">
+                  <option value="INR">INR (₹)</option>
+                  <option value="USD">USD ($)</option>
+                  <option value="EUR">EUR (€)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="text-end">
+              <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Registration Settings -->
+        <div *ngIf="activeSection === 'registration'">
+          <h5 class="section-title">Registration Settings</h5>
+          <p class="section-subtitle">Configure the registration process for your attendees.</p>
+
+          <form (ngSubmit)="saveRegistrationSettings()">
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input"
+                     type="checkbox"
+                     id="enableCustomQuestions"
+                     [(ngModel)]="registrationSettings.enableCustomQuestions"
+                     name="enableCustomQuestions">
+              <label class="form-check-label" for="enableCustomQuestions">
+                Enable custom questions on registration forms
+              </label>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input"
+                     type="checkbox"
+                     id="collectPhoneNumber"
+                     [(ngModel)]="registrationSettings.collectPhoneNumber"
+                     name="collectPhoneNumber">
+              <label class="form-check-label" for="collectPhoneNumber">
+                Collect phone number by default
+              </label>
+            </div>
+
+            <div class="form-check form-switch mb-3">
+              <input class="form-check-input"
+                     type="checkbox"
+                     id="sendConfirmationEmail"
+                     [(ngModel)]="registrationSettings.sendConfirmationEmail"
+                     name="sendConfirmationEmail">
+              <label class="form-check-label" for="sendConfirmationEmail">
+                Automatically send confirmation emails
+              </label>
+            </div>
+
+            <div class="text-end mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Email Templates -->
+        <div *ngIf="activeSection === 'email'">
+          <h5 class="section-title">Email Templates</h5>
+          <p class="section-subtitle">Customize the emails sent to your attendees.</p>
+
+          <form (ngSubmit)="saveEmailTemplates()">
+            <div class="mb-3">
+              <label for="confirmationSubject" class="form-label">Confirmation Email Subject</label>
+              <input type="text"
+                     id="confirmationSubject"
+                     class="form-control"
+                     [(ngModel)]="emailTemplates.confirmationSubject"
+                     name="confirmationSubject">
+              <small class="form-text text-muted">
+                Available placeholder: {{ '{' }}eventName{{ '}' }}
+              </small>
+            </div>
+
+            <div class="mb-4">
+              <label for="confirmationBody" class="form-label">Confirmation Email Body</label>
+              <textarea id="confirmationBody"
+                        class="form-control"
+                        rows="6"
+                        [(ngModel)]="emailTemplates.confirmationBody"
+                        name="confirmationBody"></textarea>
+              <small class="form-text text-muted">
+                Available placeholders:
+                {{ '{' }}eventName{{ '}' }},
+                {{ '{' }}attendeeName{{ '}' }},
+                {{ '{' }}eventDate{{ '}' }},
+                {{ '{' }}eventVenue{{ '}' }}
+              </small>
+            </div>
+
+            <hr>
+
+            <div class="mb-3 mt-4">
+              <label for="reminderSubject" class="form-label">Reminder Email Subject</label>
+              <input type="text"
+                     id="reminderSubject"
+                     class="form-control"
+                     [(ngModel)]="emailTemplates.reminderSubject"
+                     name="reminderSubject">
+              <small class="form-text text-muted">
+                Available placeholder: {{ '{' }}eventName{{ '}' }}
+              </small>
+            </div>
+
+            <div class="mb-3">
+              <label for="reminderBody" class="form-label">Reminder Email Body</label>
+              <textarea id="reminderBody"
+                        class="form-control"
+                        rows="6"
+                        [(ngModel)]="emailTemplates.reminderBody"
+                        name="reminderBody"></textarea>
+              <small class="form-text text-muted">
+                Available placeholders:
+                {{ '{' }}eventName{{ '}' }},
+                {{ '{' }}attendeeName{{ '}' }},
+                {{ '{' }}eventDate{{ '}' }},
+                {{ '{' }}eventVenue{{ '}' }}
+              </small>
+            </div>
+
+            <div class="text-end mt-4">
+              <button type="submit" class="btn btn-primary" [disabled]="isLoading">
+                Save Changes
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Payment -->
+        <div *ngIf="activeSection === 'payment'">
+          <h5 class="section-title">Payment Configurations</h5>
+          <div class="payment-placeholder">
+            <i class="fas fa-cogs fa-2x mb-3"></i>
+            <p>Payment gateway integration settings would appear here.</p>
+            <small class="text-muted">e.g., Stripe, Razorpay API Keys</small>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

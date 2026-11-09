@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+**/node_modules/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+backend/.env
+backend/.env.*
+
+# Angular generated files
+event-management/.angular/
+event-management/dist/
+event-management/out-tsc/
+
+# Build and cache files
+coverage/
+.npm/
+*.log
+
+# Uploaded files
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Firebase credentials
+serviceAccountKey.json
+*firebase-adminsdk*.json
+
+# Private keys
+*.pem
+*.key
+
+# Editor and OS files
+.vscode/*
+!.vscode/extensions.json
+.DS_Store
+Thumbs.db

@@ -1,0 +1,232 @@
+/* Apply a global background color */
+:host {
+  display: block;
+  background-color: #fffffe;
+  padding: 1rem;
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-title {
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+  font-weight: 500;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #716040;
+  font-size: 1rem;
+  margin: 0.25rem 0 0;
+}
+
+.btn-primary {
+  background-color: #8c7851;
+  border-color: #8c7851;
+  color: #fffffe;
+  font-weight: 500;
+}
+.btn-primary:hover {
+  background-color: #716040;
+  border-color: #716040;
+}
+
+/* Action Bar */
+.action-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.search-and-filter {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.btn-view, .btn-filter {
+  background-color: #eaddcf;
+  border: 1px solid #eaddcf;
+  color: #716040;
+  font-weight: 500;
+}
+.btn-view.active, .btn-view:hover, .btn-filter:hover {
+  background-color: #8c7851;
+  color: #fffffe;
+  border-color: #8c7851;
+}
+
+.input-group-text {
+  background-color: #eaddcf;
+  border-color: #eaddcf;
+  color: #716040;
+}
+.form-control {
+  border-color: #eaddcf;
+}
+.form-control:focus {
+  border-color: #8c7851;
+  box-shadow: 0 0 0 0.25rem rgba(140, 120, 81, 0.25);
+}
+
+/* Event Sections */
+.event-section {
+  background-color: #fffffe;
+  border: 1px solid #eaddcf;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.section-title {
+  color: #020826;
+  font-family: 'Instrument Sans', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  letter-spacing: 0.5px;
+  padding: 0.75rem 1.25rem;
+  margin: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: #f8f5f1;
+  border-bottom: 1px solid #eaddcf;
+}
+
+.section-title .fa-chevron-down {
+  transition: transform 0.3s ease;
+}
+
+.section-title.collapsed .fa-chevron-down {
+  transform: rotate(-90deg);
+}
+
+/* Event Table */
+.event-table {
+  margin-bottom: 0;
+  color: #020826;
+}
+.event-table thead th {
+  font-size: 0.85rem;
+  color: #716040;
+  text-transform: uppercase;
+  border: none;
+  padding: 1rem 1.25rem;
+}
+.event-table tbody td {
+  vertical-align: middle;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid #eaddcf;
+}
+
+/* Status Badges */
+.badge {
+  padding: 0.4em 0.8em;
+  font-size: 0.8rem;
+  border-radius: 20px;
+  font-weight: 600;
+}
+.status-upcoming { background-color: #cfe2ff; color: #0a58ca; }
+.status-ongoing { background-color: #d1e7dd; color: #146c43; }
+.status-completed { background-color: #f8d7da; color: #a4202c; }
+
+/* Actions Column */
+.actions-cell {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.btn-edit {
+  background-color: #eaddcf;
+  border-color: #eaddcf;
+  color: #716040;
+  font-weight: 500;
+  padding: 0.25rem 0.75rem;
+  margin-right: 0.5rem;
+}
+
+.btn-edit:hover {
+  background-color: #dcd0c1;
+}
+
+.btn-actions {
+  background: none;
+  border: 1px solid #dcd0c1;
+  color: #716040;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+.btn-actions:hover {
+  background-color: #eaddcf;
+}
+.dropdown-menu {
+  border-color: #eaddcf;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+}
+.dropdown-item {
+  color: #020826;
+}
+.dropdown-item:hover {
+  background-color: #eaddcf;
+}
+
+/* Calendar Placeholder */
+.calendar-placeholder {
+  border: 2px dashed #eaddcf;
+  border-radius: 8px;
+  padding: 4rem;
+  background-color: #f8f5f1;
+  color: #716040;
+}
+
+/* Scrollable table area with sticky header */
+.manage-scroll-table {
+  max-height: 380px;
+  overflow-y: auto;
+  border-radius: 0 0 8px 8px;
+  position: relative;
+}
+
+.manage-scroll-table .event-table {
+  margin-bottom: 0;
+  border-collapse: separate;
+  border-spacing: 0;
+}
+
+.manage-scroll-table .event-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background-color: #fffffe;
+  box-shadow: 0 1px 0 #eaddcf;
+}
+
+/* Custom scrollbar */
+.manage-scroll-table::-webkit-scrollbar {
+  width: 8px;
+}
+
+.manage-scroll-table::-webkit-scrollbar-thumb {
+  background: #c7b299;
+  border-radius: 10px;
+}
+
+.manage-scroll-table::-webkit-scrollbar-track {
+  background: #f8f5f1;
+  border-radius: 10px;
+}
+
+/* Firefox */
+.manage-scroll-table {
+  scrollbar-width: thin;
+  scrollbar-color: #c7b299 #f8f5f1;
+}

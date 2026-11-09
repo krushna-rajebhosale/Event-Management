@@ -1,0 +1,138 @@
+<div class="container my-5">
+
+  <!-- VIEW 1: EVENT SELECTION -->
+  <div *ngIf="!selectedEvent; else reportDetails">
+    <div class="page-header mb-4">
+      <div>
+        <h1 class="page-title">Event Reports</h1>
+        <p class="page-subtitle">Select a completed event to generate its performance report.</p>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="alert alert-info">Loading completed events...</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="row">
+      <div class="col-md-6 col-lg-4 mb-4" *ngFor="let event of allEvents">
+        <div class="event-card h-100" (click)="selectEvent(event)">
+          <div class="card-body">
+            <h5 class="event-name">{{ event.name }}</h5>
+            <p class="event-date text-muted">
+              <i class="fas fa-calendar-check me-2"></i>
+              Completed on {{ event.date | date:'longDate' }}
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoading && allEvents.length === 0" class="alert alert-warning">
+      No completed events found.
+    </div>
+  </div>
+
+  <!-- VIEW 2: REPORT DETAILS -->
+  <ng-template #reportDetails>
+    <div class="page-header mb-4">
+      <div>
+        <button class="btn btn-back mb-2" (click)="goBackToEvents()">
+          <i class="fas fa-arrow-left me-2"></i>Back to Events
+        </button>
+        <h1 class="page-title">Report: {{ selectedEvent?.name }}</h1>
+        <p class="page-subtitle">An overview of your event's performance.</p>
+      </div>
+
+      <div class="header-actions">
+        <button class="btn btn-primary" (click)="exportReport()" [disabled]="!reportData">
+          <i class="fas fa-download me-2"></i>Export Report
+        </button>
+      </div>
+    </div>
+
+    <div *ngIf="isLoading" class="alert alert-info">Generating report...</div>
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div *ngIf="reportData">
+      <!-- Key Metrics -->
+      <div class="stats-container mb-4">
+        <div class="stat-card">
+          <div class="stat-value">{{ reportData.totalRevenue | currency:'INR':'symbol':'1.0-0' }}</div>
+          <div class="stat-label">Total Revenue</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value">{{ reportData.totalRegistrations }}</div>
+          <div class="stat-label">Total Registrations</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value">{{ reportData.attendancePercentage.toFixed(1) }}%</div>
+          <div class="stat-label">Attendance Rate</div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-value">{{ reportData.checkedInCount }}</div>
+          <div class="stat-label">Attendees Checked In</div>
+        </div>
+      </div>
+
+      <!-- Report Tables -->
+      <div class="row g-4">
+        <div class="col-lg-6">
+          <div class="report-section">
+            <h5 class="section-title">Ticket Sales Breakdown</h5>
+
+            <div *ngIf="reportData.ticketSales?.length > 0; else noTicketData">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Ticket Type</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let sale of reportData.ticketSales">
+                    <td>{{ sale.type }}</td>
+                    <td>{{ sale.count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ng-template #noTicketData>
+              <div class="text-muted">No ticket sales data available.</div>
+            </ng-template>
+          </div>
+        </div>
+
+        <div class="col-lg-6">
+          <div class="report-section">
+            <h5 class="section-title">Participant Demographics</h5>
+
+            <div *ngIf="reportData.demographics?.length > 0; else noDemoData">
+              <table class="table">
+                <thead>
+                  <tr>
+                    <th>Group</th>
+                    <th>Count</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let item of reportData.demographics">
+                    <td>{{ item.group }}</td>
+                    <td>{{ item.count }}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <ng-template #noDemoData>
+              <div class="text-muted">No demographic data available.</div>
+            </ng-template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+</div>

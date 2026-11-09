@@ -1,0 +1,121 @@
+/* Apply a global background color */
+:host {
+  display: block;
+  background-color: #fffffe;
+  padding: 1rem;
+}
+
+/* Page Header */
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.page-title {
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  margin: 0;
+}
+
+.page-subtitle {
+  color: #716040;
+  font-size: 1rem;
+  margin: 0.25rem 0 0;
+}
+
+.btn-primary {
+  background-color: #8c7851;
+  border-color: #8c7851;
+  color: #fffffe;
+  font-weight: 500;
+}
+.btn-primary:hover {
+  background-color: #716040;
+  border-color: #716040;
+}
+
+.btn-back {
+  background: none;
+  border: none;
+  color: #716040;
+  font-weight: 600;
+  padding: 0.25rem 0;
+}
+
+/* Event Selection Cards */
+.event-card {
+  border: 1px solid #eaddcf;
+  border-radius: 8px;
+  background-color: #fffffe;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+}
+.event-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+}
+.event-card .card-body {
+  padding: 1.5rem;
+}
+.event-name {
+  font-family: 'Playfair Display', serif;
+  color: #020826;
+  margin-bottom: 0.5rem;
+}
+
+/* Report View Styles */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1rem;
+}
+
+.stat-card {
+  background-color: #f8f5f1;
+  border: 1px solid #eaddcf;
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2.5rem;
+  font-weight: 600;
+  color: #020826;
+  font-family: 'Playfair Display', serif;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #716040;
+  font-weight: 500;
+}
+
+.report-section {
+  border: 1px solid #eaddcf;
+  border-radius: 8px;
+  padding: 1.5rem;
+  height: 100%;
+}
+
+.section-title {
+  font-family: 'Playfair Display', serif;
+  color: #020826;
+  margin-bottom: 1.5rem;
+}
+
+.chart-placeholder {
+  height: 250px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f8f5f1;
+  border: 2px dashed #eaddcf;
+  border-radius: 8px;
+  color: #716040;
+  font-style: italic;
+}

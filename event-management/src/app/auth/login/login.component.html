@@ -1,0 +1,106 @@
+<div class="login-container min-vh-100 d-flex align-items-center justify-content-center" style="background-image: url(../../../assets/bg.svg); background-size: cover;">
+  <div class="login-card shadow-lg">
+    <div class="row g-0 h-100">
+      <!-- Left Side - Login Form -->
+      <div class="col-lg-6 col-12">
+        <div class="login-form-section d-flex flex-column justify-content-center h-100 p-4 p-lg-5">
+          <!-- Logo/Brand -->
+          <div class="brand mb-4">
+            <img src="assets/event-management.svg" alt="" height="40px" />
+            <span class="brand-name" style="font-family: Playfair Display;">Evently</span>
+          </div>
+
+          <!-- Welcome Text -->
+          <div class="welcome-section mb-4">
+            <h1 class="welcome-title mb-2">Hello,<br />Welcome Back</h1>
+            <p class="welcome-subtitle text-muted">Login to see your events.</p>
+          </div>
+
+          <!-- Login Form -->
+          <form (ngSubmit)="onSubmit()" #loginForm="ngForm" class="login-form" novalidate>
+            <div class="mb-3 position-relative">
+              <label for="email" class="form-label visually-hidden">Email</label>
+              <input
+                type="email"
+                class="form-control custom-input input-with-icon"
+                id="email"
+                name="email"
+                [(ngModel)]="email"
+                placeholder="Email"
+                required
+                #emailField="ngModel"
+              />
+              <i class="fas fa-envelope input-icon"></i>
+              <div *ngIf="emailField.invalid && emailField.touched" class="invalid-feedback d-block">
+                Please enter a valid email address
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="password" class="form-label visually-hidden">Password</label>
+              <div class="password-input-group position-relative">
+                <input
+                  [type]="showPassword ? 'text' : 'password'"
+                  class="form-control custom-input input-with-icon"
+                  id="password"
+                  name="password"
+                  [(ngModel)]="password"
+                  placeholder="Password"
+                  required
+                  minlength="6"
+                  #passwordField="ngModel"
+                />
+                <i class="fas fa-fingerprint input-icon password-icon"></i>
+                <button
+                  type="button"
+                  class="password-toggle-btn btn btn-link position-absolute top-50 end-0 translate-middle-y me-2"
+                  (click)="togglePassword()"
+                  aria-label="Toggle password visibility"
+                >
+                  <i [class]="showPassword ? 'fas fa-eye-slash' : 'fas fa-eye'"></i>
+                </button>
+              </div>
+              <div *ngIf="passwordField.invalid && passwordField.touched" class="invalid-feedback d-block">
+                Password must be at least 6 characters long
+              </div>
+            </div>
+
+            
+
+            <!-- Sign In Button -->
+            <button
+              type="submit"
+              class="btn custom-btn w-100 mb-4"
+              [disabled]="loginForm.invalid || isLoading">
+              <span *ngIf="isLoading" class="spinner-border spinner-border-sm me-2"></span>
+              {{ isLoading ? 'Signing In...' : 'Sign In' }}
+            </button>
+          </form>
+
+          <!-- Sign Up Link -->
+          <div class="text-center">
+            <span class="signup-text">Don't have an account? </span>
+            <a routerLink="/signup" class="signup-link">Sign Up</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Side - Illustration -->
+      <div class="col-lg-6 d-none d-lg-block">
+        <div
+          class="illustration-section h-100 d-flex align-items-center justify-content-center position-relative"
+        >
+          <div class="illustration-content">
+            <!-- Custom Image - Replace src with your image path -->
+            <img
+              src="assets/login_theme.jpg"
+              alt="Login illustration"
+              class="custom-illustration"
+              loading="lazy"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
