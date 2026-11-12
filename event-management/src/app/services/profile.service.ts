@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
-  private base = 'https://event-management-api-5i6w.onrender.com/api/profile';
+  private base = 'http://localhost:3000/api/profile';
 
   constructor(private http: HttpClient) {}
 

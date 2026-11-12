@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class EventMediaService {
-  private base = 'https://event-management-api-5i6w.onrender.com/api/event-media';
+  private base = 'http://localhost:3000/api/event-media';
 
   constructor(private http: HttpClient) {}
 

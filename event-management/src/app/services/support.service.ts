@@ -11,7 +11,7 @@ export type SupportTicket = {
 
 @Injectable({ providedIn: 'root' })
 export class SupportService {
-  private baseUrl = 'https://event-management-api-5i6w.onrender.com/api/support';
+  private baseUrl = 'http://localhost:3000/api/support';
 
   constructor(private http: HttpClient) {}
 
