@@ -4,7 +4,7 @@ import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  private baseUrl = 'http://localhost:3000/api/auth';
+  private baseUrl = 'https://event-management-api-5i6w.onrender.com/api/auth';
 
   constructor(private http: HttpClient) {}
 
