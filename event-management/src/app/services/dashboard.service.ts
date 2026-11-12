@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class DashboardService {
-  private dashboardBase = 'http://localhost:3000/api/dashboard';
-  private eventsBase = 'http://localhost:3000/api/events';
+  private dashboardBase = 'https://event-management-api-5i6w.onrender.com/api/dashboard';
+  private eventsBase = 'https://event-management-api-5i6w.onrender.com/api/events';
 
   constructor(private http: HttpClient) {}
 

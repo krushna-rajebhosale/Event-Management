@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class PublicEventService {
-  private baseUrl = 'http://localhost:3000/api/public';
+  private baseUrl = 'https://event-management-api-5i6w.onrender.com/api/public';
 
   constructor(private http: HttpClient) {}
 

@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class SettingsService {
-  private base = 'http://localhost:3000/api/settings';
+  private base = 'https://event-management-api-5i6w.onrender.com/api/settings';
 
   constructor(private http: HttpClient) {}
 

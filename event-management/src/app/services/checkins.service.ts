@@ -3,8 +3,8 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class CheckinsService {
-  private regBase = 'http://localhost:3000/api/registrations';
-  private checkinBase = 'http://localhost:3000/api/checkin';
+  private regBase = 'https://event-management-api-5i6w.onrender.com/api/registrations';
+  private checkinBase = 'https://event-management-api-5i6w.onrender.com/api/checkin';
 
   constructor(private http: HttpClient) {}
 
